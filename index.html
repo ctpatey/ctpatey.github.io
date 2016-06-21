@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content=" Boston Historical Sights ">
+  <meta name="author" content=" Cameron Patey ">
+	<title>Boston History</title>
+
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+
+	
+	
+
+</head>
+	<body> 
+	    <p>Search <input data-bind='value: firstName' /></p> 
+	</div>
+	<div id="map"></div>
+
+	 <div class="wikipedia-container">
+        <h3 id="wikipedia-header">Relevant Wikipedia Links</h3>
+        <ul id="wikipedia-links">Type in an address above and find relevant Wikipedia articles here!</ul>
+    </div>
+
+
+	<script src="js/app.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZylYNJduiZhal1QbW9ZivnYvnVC440LM&callback=initMap"
+    async defer></script>
+</body>
+</html>
