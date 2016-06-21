@@ -1,30 +1,45 @@
+// This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
+function AppViewModel() {
+	this.firstName = ko.observable('Bert');
+	this.lastName = ko.observable('Bertington');
+}
+
+
+// Activates knockout.js
+ko.applyBindings(new AppViewModel());
+
+
+
+
+
+
+
 // Data. Including Ajax request for relevant info from Wikipedia
-var historicLocations = 
-	[{
-		"name": "Holocaust Memorial",
-		"lat": 42.361211,
-		"lng": -71.057086
-	}, {
-		"name": "Old State House",
-		"lat": 42.358781,
-		"lng": -71.057448
-	}, {
-		"name": "Paul Revere's House",
-		"lat": 42.363668,
-		"lng": -71.053757
-	}, {
-		"name": "Old North Church",
-		"lat": 42.366388,
-		"lng": -71.054360
-	}, {
-		"name": "Old South Meeting House",
-		"lat": 42.356970,
-		"lng": -71.058331
-	}, {
-		"name": "Boston Tea Party Ships and Museum",
-		"lat": 42.352175,
-		"lng": -71.051213
-	}]
+var historicLocations = [{
+	name: 'Holocaust Memorial',
+	lat: 42.361211,
+	lng: -71.057086,
+}, {
+	name: 'Old State House',
+	lat: 42.358781,
+	lng: -71.057448,
+}, {
+	name: 'Paul Revere\'s House',
+	lat: 42.363668,
+	lng: -71.053757,
+}, {
+	name: 'Old North Church',
+	lat: 42.366388,
+	lng: -71.054360,
+}, {
+	name: 'Old South Meeting House',
+	lat: 42.356970,
+	lng: -71.058331,
+}, {
+	name: 'Boston Tea Party Ships and Museum',
+	lat: 42.352175,
+	lng: -71.051213
+}];
 
 
 

@@ -1,0 +1,11 @@
+{
+	"validateIndentation": "\t",
+	"maximumLineLength": 140,
+	"requireTrailingComma": false,
+	"disallowMultipleVarDecl": false,
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"requirePaddingNewLinesBeforeLineComments": false,
+	"requirePaddingNewLinesAfterBlocks": false
+}
