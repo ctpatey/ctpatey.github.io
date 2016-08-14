@@ -34,12 +34,15 @@ var historicLocations =
 
 
 
-function loadData (){
+
+
+
+function loadData (locations){
 
   var $wikiElem = $('#wikipedia-links');
   
 
-  historicLocations.forEach(function(location) {
+  locations.forEach(function(location) {
     var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
 
     $.ajax({
@@ -54,9 +57,9 @@ function loadData (){
         var url = "http://en.wikipedia.org/wiki/" + articleList[0];
         $wikiElem.append("<li><a target='_blank' href='" + url + "'>" + articleList[0] + "</a></li>")
         
-        console.log(response);
-        historicLocations.url = url
-        historicLocations.extract = response[2]
+        
+        location.url = url
+        location.extract = response[2]
 
       }
     });
@@ -93,31 +96,39 @@ function initMap() {
 
 // Here's my data model
 var ViewModel = function() {
+
+
     var self = this;
 
     self.locations = ko.observableArray(historicLocations);
+    loadData(self.locations());
+    console.log(self.locations())
+    self.locations().forEach(function() {
+
+
+    })
     
     var largeInfoWindow = new google.maps.InfoWindow();
 
     self.locations().forEach(function(location) { 
       console.log(location)
-	    var marker = new google.maps.Marker ({
-	      map: map,
-	      position: { lat: location.lat, lng: location.lng },
-	      title: location.name,
-	      animation: google.maps.Animation.DROP    
+      var marker = new google.maps.Marker ({
+        map: map,
+        position: { lat: location.lat, lng: location.lng },
+        title: location.name,
+        animation: google.maps.Animation.DROP    
 
-	    })
-	      location.marker = marker;
+      })
+        location.marker = marker;
 
-	      marker.addListener('click', function(){
-	           
-		      self.populateInfoWindow(marker, largeInfoWindow);
-		      marker.setAnimation(google.maps.Animation.BOUNCE);
-		      setTimeout(function(){ 
-	          location.marker.setAnimation(null);
-	          }, 750);
-	    });
+        marker.addListener('click', function(){
+             
+          self.populateInfoWindow(marker, largeInfoWindow);
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function(){ 
+            location.marker.setAnimation(null);
+            }, 750);
+      });
       
       self.populateInfoWindow = function(marker, infowindow) {
         if (infowindow.marker != marker) {
@@ -131,14 +142,12 @@ var ViewModel = function() {
     });
 
 
-   
-    
-    
+
 };
 
 
 
-loadData();
+
 
 
 
