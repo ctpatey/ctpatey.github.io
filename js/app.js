@@ -4,32 +4,32 @@ var historicLocations =
     "name": "Holocaust Memorial",
     "lat": 42.361211,
     "lng": -71.057086,
-    "wikiPageid": 15507987
+    "wikiPageName": "New_England_Holocaust_Memorial"
   }, {
     "name": "Old State House",
     "lat": 42.358781,
     "lng": -71.057448,
-    "wikiPageid": 1418090
+    "wikiPageName": "Old_State_House_(Boston)"
   }, {
     "name": "Paul Revere's House",
     "lat": 42.363668,
     "lng": -71.053757,
-    "wikiPageid": 2709194
+    "wikiPageName": "Paul_Revere_House"
   }, {
     "name": "Old North Church",
     "lat": 42.366388,
     "lng": -71.054360,
-    "wikiPageid": 667505
+    "wikiPageName": "Old_North_Church"
   }, {
     "name": "Old South Meeting House",
     "lat": 42.356970,
     "lng": -71.058331,
-    "wikiPageid": 1115450
+    "wikiPageName": "Old_South_Meeting_House"
   }, {
     "name": "Boston Tea Party Ships and Museum",
     "lat": 42.352175,
     "lng": -71.051213,
-    "wikiPageid": 4608353
+    "wikiPageName": "Boston_Tea_Party"
   }]
 
 
@@ -38,32 +38,36 @@ function loadData (){
 
   var $wikiElem = $('#wikipedia-links');
   
-  var wikiUrl = "https://en.wikipedia.org/w/api.php?"
 
-  $.ajax({
-    url: wikiUrl,
-    dataType: "jsonp",
-    success: function( response ) {
+  historicLocations.forEach(function(location) {
+    var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
 
-      
-      var articleList = response[1];
+    $.ajax({
+      url: wikiUrl,
+      dataType: "jsonp",
+      success: function( response ) {
 
-
-      console.log(response)
-
-      for (var i = 0; i < articleList.length; i++) {
-        articleStr = articleList[i];
-
-        var url = "http://en.wikipedia.org/wiki/" + articleStr;
-        $wikiElem.append("<li><a target='_blank' href='" + url + "'>" + articleStr + "</a></li>")
-      };
+        
+        var articleList = response[1];
 
 
-    }
+        var url = "http://en.wikipedia.org/wiki/" + articleList[0];
+        $wikiElem.append("<li><a target='_blank' href='" + url + "'>" + articleList[0] + "</a></li>")
+        
+        console.log(response);
+        historicLocations.url = url
+        historicLocations.extract = response[2]
+
+      }
+    });
   });
 };
 
-loadData();
+console.log(historicLocations)
+
+
+
+
 
 
 
@@ -81,26 +85,22 @@ function initMap() {
     zoom: 15
   });
 
-  
   ko.applyBindings(new ViewModel());
 
 }
 
 
+
 // Here's my data model
 var ViewModel = function() {
     var self = this;
+
     self.locations = ko.observableArray(historicLocations);
     
-    
-    self.clickFunction = function() {
-      
-    }
-
     var largeInfoWindow = new google.maps.InfoWindow();
 
-    self.locations().forEach(function(location) {
-
+    self.locations().forEach(function(location) { 
+      console.log(location)
 	    var marker = new google.maps.Marker ({
 	      map: map,
 	      position: { lat: location.lat, lng: location.lng },
@@ -118,21 +118,27 @@ var ViewModel = function() {
 	          location.marker.setAnimation(null);
 	          }, 750);
 	    });
-       
+      
+      self.populateInfoWindow = function(marker, infowindow) {
+        if (infowindow.marker != marker) {
+          infowindow.marker = marker; 
+          infowindow.setContent('<div>' + marker.title + '</div>' );
+          infowindow.open(map, marker);
+      
+        }
+      }
+
     });
 
 
-    self.populateInfoWindow = function(marker, infowindow) {
-      if (infowindow.marker != marker) {
-        infowindow.marker = marker; 
-        infowindow.setContent('<div>' + marker.title + '</div>');
-        infowindow.open(map, marker);
-    
-      }
-    }
+   
     
     
 };
+
+
+
+loadData();
 
 
 
