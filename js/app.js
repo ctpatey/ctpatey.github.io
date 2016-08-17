@@ -37,12 +37,12 @@ var historicLocations =
 
 
 
-function loadData (locations){
+function loadData (location){
 
   var $wikiElem = $('#wikipedia-links');
   
 
-  locations.forEach(function(location) {
+  
     var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
 
     $.ajax({
@@ -63,7 +63,7 @@ function loadData (locations){
 
       }
     });
-  });
+  
 };
 
 console.log(historicLocations)
@@ -101,12 +101,13 @@ var ViewModel = function() {
     var self = this;
 
     self.locations = ko.observableArray(historicLocations);
-    loadData(self.locations());
-    console.log(self.locations())
-    self.locations().forEach(function() {
+    
 
+    self.locations().forEach(function(location){
+      loadData(location)
 
-    })
+    });
+
     
     var largeInfoWindow = new google.maps.InfoWindow();
 
@@ -123,24 +124,28 @@ var ViewModel = function() {
 
         marker.addListener('click', function(){
              
-          self.populateInfoWindow(marker, largeInfoWindow);
+          self.populateInfoWindow(marker, largeInfoWindow, location);
           marker.setAnimation(google.maps.Animation.BOUNCE);
           setTimeout(function(){ 
             location.marker.setAnimation(null);
             }, 750);
       });
       
-      self.populateInfoWindow = function(marker, infowindow) {
+      self.populateInfoWindow = function(marker, infowindow, location) {
         if (infowindow.marker != marker) {
           infowindow.marker = marker; 
-          infowindow.setContent('<div>' + marker.title + '</div>' );
+          infowindow.setContent("<div><b><a target='_blank' href='" + location.url + "'>" + marker.title + "</a></b></div>" + "<div>" + location.extract[0] + "</div>" );
           infowindow.open(map, marker);
       
         }
       }
 
     });
-
+  
+  sort function
+  self.locationFilter = ko.computed(function() {
+    return ko.utils.arrayFilter(self.locations(), function(location))
+  })
 
 
 };
