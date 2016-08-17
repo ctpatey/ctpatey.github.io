@@ -143,7 +143,23 @@ var ViewModel = function() {
     });
   
   // // filter function
-  // self.singleLocation = ko.observable()
+  self.singleLocation = ko.observable("")
+
+  self.UserInput = ko.computed(function() {
+    var filter = self.singleLocation().toLowerCase();
+    return ko.utils.arrayFilter(self.locations(), function(location){
+      
+      if (location.name.toLowerCase().indexOf(filter) !== -1) {
+        console.log("meow")
+        console.log(location.marker.visible)
+        location.marker.visible = true;
+      } else {
+        console.log("hi")
+        location.marker.visible = false;
+        console.log(location.marker.visible)
+      };
+    });
+  });
 
   // self.locationFilter = ko.computed(function() {
   //   return ko.utils.arrayFilter(self.locations(), function(location){

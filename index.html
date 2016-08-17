@@ -19,17 +19,17 @@
 
 </head>
 	<body> 
-	    <!-- <p>Search: <input data-bind="value: singleLocation, valueUpdate:'afterkeydown'" /> </p> -->
+	    <p>Search: <input data-bind="textInput: singleLocation"/> </p>
      
 	</div>
 	<div id="map"></div>
 
-	<!-- <div class="wikipedia-container">
-        <ul data-bind="foreach: locationFilter">
+	<div class="wikipedia-container">
+        <ul data-bind="foreach: locations">
             <li data-bind="text: name"></li>
         </ul>
        
-  </div> -->
+  </div>
 
 
 	<script src="js/app.js"></script>
