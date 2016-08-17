@@ -55,7 +55,7 @@ function loadData (location){
 
 
         var url = "http://en.wikipedia.org/wiki/" + articleList[0];
-        $wikiElem.append("<li><a target='_blank' href='" + url + "'>" + articleList[0] + "</a></li>")
+        // $wikiElem.append("<li><a target='_blank' href='" + url + "'>" + articleList[0] + "</a></li>")
         
         
         location.url = url
@@ -142,10 +142,14 @@ var ViewModel = function() {
 
     });
   
-  sort function
-  self.locationFilter = ko.computed(function() {
-    return ko.utils.arrayFilter(self.locations(), function(location))
-  })
+  // // filter function
+  // self.singleLocation = ko.observable()
+
+  // self.locationFilter = ko.computed(function() {
+  //   return ko.utils.arrayFilter(self.locations(), function(location){
+  //     return 
+  //   });
+  // });
 
 
 };
