@@ -150,22 +150,14 @@ var ViewModel = function() {
     return ko.utils.arrayFilter(self.locations(), function(location){
       
       if (location.name.toLowerCase().indexOf(filter) !== -1) {
-        console.log("meow")
-        console.log(location.marker.visible)
-        location.marker.visible = true;
+        // Why does this work?
+        location.marker.setMap(map)
       } else {
-        console.log("hi")
-        location.marker.visible = false;
-        console.log(location.marker.visible)
+        location.marker.setMap(null)
       };
     });
   });
 
-  // self.locationFilter = ko.computed(function() {
-  //   return ko.utils.arrayFilter(self.locations(), function(location){
-  //     return 
-  //   });
-  // });
 
 
 };
