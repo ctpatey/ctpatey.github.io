@@ -145,21 +145,23 @@ var ViewModel = function() {
   // // filter function
   self.singleLocation = ko.observable("")
 
-  self.UserInput = ko.computed(function() {
+
+  self.userInput = ko.computed(function() {
     var filter = self.singleLocation().toLowerCase();
     return ko.utils.arrayFilter(self.locations(), function(location){
       
       if (location.name.toLowerCase().indexOf(filter) !== -1) {
         // Why does this work?
-        location.marker.setMap(map)
+        location.marker.setVisible(true)
+        return true
       } else {
-        location.marker.setMap(null)
+        location.marker.setVisible(false)
+        return false
       };
     });
   });
 
-
-
+  console.log(self.userInput())
 };
 
 
