@@ -138,7 +138,7 @@ var ViewModel = function() {
           infowindow.open(map, marker);
       
         }
-      }
+      };
 
     // self.infoPop = function(location){
         
@@ -147,7 +147,7 @@ var ViewModel = function() {
     //       setTimeout(function(){ 
     //         location.marker.setAnimation(null);
     //         }, 750);
-    // };
+    
 
 
 
