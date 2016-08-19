@@ -38,10 +38,6 @@ var historicLocations =
 
 
 function loadData (location){
-
-  var $wikiElem = $('#wikipedia-links');
-  
-
   
     var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
 
@@ -66,7 +62,7 @@ function loadData (location){
   
 };
 
-console.log(historicLocations)
+
 
 
 
@@ -112,7 +108,7 @@ var ViewModel = function() {
     var largeInfoWindow = new google.maps.InfoWindow();
 
     self.locations().forEach(function(location) { 
-      console.log(location)
+      
       var marker = new google.maps.Marker ({
         map: map,
         position: { lat: location.lat, lng: location.lng },
@@ -130,8 +126,12 @@ var ViewModel = function() {
             location.marker.setAnimation(null);
             }, 750);
       });
-      
-      self.populateInfoWindow = function(marker, infowindow, location) {
+
+        
+
+    });
+
+    self.populateInfoWindow = function(marker, infowindow, location) {
         if (infowindow.marker != marker) {
           infowindow.marker = marker; 
           infowindow.setContent("<div><b><a target='_blank' href='" + location.url + "'>" + marker.title + "</a></b></div>" + "<div>" + location.extract[0] + "</div>" );
@@ -140,7 +140,17 @@ var ViewModel = function() {
         }
       }
 
-    });
+    // self.listClick = function(location){
+        
+    //       self.populateInfoWindow(location.marker, largeInfoWindow, location);
+    //       self.locations().marker.setAnimation(google.maps.Animation.BOUNCE);
+    //       setTimeout(function(){ 
+    //         location.marker.setAnimation(null);
+    //         }, 750);
+    // };
+
+
+
   
   // // filter function
   self.singleLocation = ko.observable("")
@@ -161,7 +171,7 @@ var ViewModel = function() {
     });
   });
 
-  console.log(self.userInput())
+  
 };
 
 
