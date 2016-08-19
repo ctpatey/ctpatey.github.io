@@ -38,7 +38,11 @@ var historicLocations =
 
 
 function loadData (location){
-  
+    
+    var wikiRequestTimeOut = setTimeout(function(){
+      $('p').append("Wiki API failed. Try again later.");
+    }, 3000);
+
     var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
 
     $.ajax({
@@ -51,13 +55,13 @@ function loadData (location){
 
 
         var url = "http://en.wikipedia.org/wiki/" + articleList[0];
-        // $wikiElem.append("<li><a target='_blank' href='" + url + "'>" + articleList[0] + "</a></li>")
         
         
         location.url = url
         location.extract = response[2]
-
+        clearTimeout(wikiRequestTimeOut);
       }
+
     });
   
 };
@@ -75,10 +79,17 @@ function loadData (location){
 
 // GoogleMaps API integration
 var map;
-
+// I got this bit of code from stackoverflow.
+var googleMapsTimeout = setTimeout(function(){
+    if (!window.google || !window.google.maps){
+       $('p').append("Google Maps API failed. Try again later.");
+    }
+  }, 3000);
 
 
 function initMap() {
+  
+
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 42.3601, lng: -71.0589 },
     zoom: 15
@@ -86,6 +97,7 @@ function initMap() {
 
   ko.applyBindings(new ViewModel());
 
+  clearTimeout(googleMapsTimeout);
 }
 
 
@@ -115,7 +127,7 @@ var ViewModel = function() {
         title: location.name,
         animation: google.maps.Animation.DROP    
 
-      })
+      });
         location.marker = marker;
 
         marker.addListener('click', function(){
@@ -125,10 +137,7 @@ var ViewModel = function() {
           setTimeout(function(){ 
             location.marker.setAnimation(null);
             }, 750);
-      });
-
-        
-
+        });
     });
 
     self.populateInfoWindow = function(marker, infowindow, location) {
@@ -138,15 +147,15 @@ var ViewModel = function() {
           infowindow.open(map, marker);
       
         }
-      };
+    };
 
-    // self.infoPop = function(location){
-        
-    //       self.populateInfoWindow(location.marker, largeInfoWindow, location);
-    //       self.locations().marker.setAnimation(google.maps.Animation.BOUNCE);
-    //       setTimeout(function(){ 
-    //         location.marker.setAnimation(null);
-    //         }, 750);
+    self.infoPop = function(location){
+      self.populateInfoWindow(location.marker, largeInfoWindow, location)
+      location.marker.setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function(){ 
+            location.marker.setAnimation(null);
+            }, 750);
+    };
     
 
 
@@ -161,7 +170,6 @@ var ViewModel = function() {
     return ko.utils.arrayFilter(self.locations(), function(location){
       
       if (location.name.toLowerCase().indexOf(filter) !== -1) {
-        // Why does this work?
         location.marker.setVisible(true)
         return true
       } else {

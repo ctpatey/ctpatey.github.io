@@ -16,19 +16,28 @@
     
 </head>
 
-<body>
-    <p>Search:
-      	<input data-bind="textInput: singleLocation" /> 
-    </p>
+<body class="container-fluid">
+		
+			<div class="col-sm-2">
+				<p>Search:
+	      	<input data-bind="textInput: singleLocation" /> 
+	    	</p>
+	    	
+	      <ul data-bind="foreach: userInput">
+	        <li data-bind="text: name, click: $parent.infoPop"></li>
+	      </ul>
+    	
+			</div>
 
-    <div id="map"></div>
+	
+		
+    
+		
+			<div id="map" class="col-sm-12"></div>
+		
+    
 
-    <div class="wikipedia-container">
-        <ul data-bind="foreach: userInput">
-            <li data-bind="text: name"></li>
-        </ul>
-
-    </div>
+    
 		
 		<script async src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
 		<script async src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>

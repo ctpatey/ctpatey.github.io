@@ -1,16 +1,15 @@
-body, html { 
+body, 
+html { 
 	font-family: arial; font-size: 14px;  height: 100%;
   margin: 0;
   padding: 0; 
 }
 
-.wikipedia-container {
-    
-}
+
 
 #map {
-	width: 800px;
-	height: 920px;
-	float: right;
+	width: 70%;
+	height: 90%;
+	
 }
 
