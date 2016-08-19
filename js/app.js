@@ -140,7 +140,7 @@ var ViewModel = function() {
         }
       }
 
-    // self.listClick = function(location){
+    // self.infoPop = function(location){
         
     //       self.populateInfoWindow(location.marker, largeInfoWindow, location);
     //       self.locations().marker.setAnimation(google.maps.Animation.BOUNCE);
