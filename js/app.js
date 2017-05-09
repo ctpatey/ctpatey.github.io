@@ -49,7 +49,7 @@ function loadData (location){
       url: wikiUrl,
       dataType: "jsonp",
       success: function( response ) {
-
+        console.log(response)
         
         var articleList = response[1];
 
@@ -79,7 +79,7 @@ function loadData (location){
 
 // GoogleMaps API integration
 var map;
-// I got this bit of code from stackoverflow.
+// I got this bit of code from stackoverflow./
 var googleMapsTimeout = setTimeout(function(){
     if (!window.google || !window.google.maps){
        $('p').append("Google Maps API failed. Try again later.");
