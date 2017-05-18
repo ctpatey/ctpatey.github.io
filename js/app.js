@@ -32,50 +32,28 @@ var historicLocations =
     "wikiPageName": "Boston_Tea_Party"
   }]
 
-
-
-
-
-
 function loadData (location){
     
-    var wikiRequestTimeOut = setTimeout(function(){
-      $('p').append("Wiki API failed. Try again later.");
-    }, 3000);
+  var wikiRequestTimeOut = setTimeout(function(){
+    $('p').append("Wiki API failed. Try again later.");
+  }, 3000);
 
-    var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
-
-    $.ajax({
-      url: wikiUrl,
-      dataType: "jsonp",
-      success: function( response ) {
-        console.log(response)
-        
-        var articleList = response[1];
-
-
-        var url = "http://en.wikipedia.org/wiki/" + articleList[0];
-        
-        
-        location.url = url
-        location.extract = response[2]
-        clearTimeout(wikiRequestTimeOut);
-      }
-
-    });
+  var wikiUrl = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + location.wikiPageName + "&format=json&callback=wikiCallback;"
   
+  $.ajax({
+    url: wikiUrl,
+    dataType: "jsonp",
+    success: function( response ) {
+      
+      var articleList = response[1];
+      var url = "http://en.wikipedia.org/wiki/" + articleList[0];
+      
+      location.url = url
+      location.extract = response[2]
+      clearTimeout(wikiRequestTimeOut);
+    }
+  });
 };
-
-
-
-
-
-
-
-
-
-
-
 
 // GoogleMaps API integration
 var map;
@@ -86,10 +64,8 @@ var googleMapsTimeout = setTimeout(function(){
     }
   }, 3000);
 
-
 function initMap() {
   
-
   map = new google.maps.Map(document.getElementById('map'), {
     center: { lat: 42.3601, lng: -71.0589 },
     zoom: 15
@@ -100,22 +76,17 @@ function initMap() {
   clearTimeout(googleMapsTimeout);
 }
 
-
-
 // Here's my data model
 var ViewModel = function() {
-
 
     var self = this;
 
     self.locations = ko.observableArray(historicLocations);
     
-
     self.locations().forEach(function(location){
       loadData(location)
 
     });
-
     
     var largeInfoWindow = new google.maps.InfoWindow();
 
@@ -156,14 +127,9 @@ var ViewModel = function() {
             location.marker.setAnimation(null);
             }, 750);
     };
-    
-
-
-
   
   // // filter function
   self.singleLocation = ko.observable("")
-
 
   self.userInput = ko.computed(function() {
     var filter = self.singleLocation().toLowerCase();
